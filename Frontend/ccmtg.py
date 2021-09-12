@@ -36,13 +36,13 @@ sector = dd_catg = ''
 sectors = []
 
 
-ildf = pd.read_csv('data/il_article_content_v2.csv')
+ildf = pd.read_csv('Frontend/data/il_article_content_v2.csv')
 ildf['abstract'].replace('', np.nan, inplace=True)
 ildf.dropna(subset=['abstract'], inplace=True)
 
 sectors = ildf['category'].unique()
 sector = sectors[0]
-dd_df = pd.read_csv('data/dd_solutions_data_v3.csv')
+dd_df = pd.read_csv('Frontend/data/dd_solutions_data_v3.csv')
 dd_catg = dd_df['map_topic'].unique()
 dd_df = dd_df.fillna('')
 sector_map_dict = { 'climateScience': 'Industry', 'socialCost':'Industry', 'health':'Health', 
@@ -53,9 +53,9 @@ sector_map_dict = { 'climateScience': 'Industry', 'socialCost':'Industry', 'heal
 
 
 #### Application starts
-st.sidebar.image('images/main.jpeg')
-st.sidebar.write('Climate Change   ')
-selection = st.sidebar.selectbox("Go to page:", [ 'Climate Change Effects', 'Climate Change Studies' , 'Climate Mitigation Solutions', 'Further Scope & Credits'])
+st.sidebar.image('Frontend/images/main.jpeg')
+st.sidebar.write('Welcome to the Climate Change Mitigation Assistant')
+selection = st.sidebar.selectbox("Go to page:", ['Climate Change Effects', 'Climate Change Studies' , 'Climate Mitigation Solutions', 'Further Scope & Credits'])
 
 
 # Main Window
@@ -66,7 +66,7 @@ sess_ddtopics = SessionState.get(ddtopics=[])
 
 st.title('Climate Change Mitigation Assistant ')
 if selection == 'Climate Change Effects':
-        st.image('images/cce1.jpeg')
+        st.image('Frontend/images/cce1.jpeg')
         st.header('Climate Change Effects')
         st.write("It is widely known that human activities especially \
                   the burning of fossil fuels have caused global warming \
@@ -76,7 +76,7 @@ if selection == 'Climate Change Effects':
         st.write("This includes rising sea level, melting ice caps, and many more.")
 
         st.write("Below we can see the rising global temperature anomaly over time.")
-        temperature = pd.read_csv("data/global-temperature-annual.csv")
+        temperature = pd.read_csv("Frontend/data/global-temperature-annual.csv")
         year_start_temp, year_end_temp = st.slider('Choose year range:', 1880, 2016, (1880, 2016))
         st.write("Global temperature anomaly data are sourced from NASA's GISS Surface Temperature \
                   (GISTEMP) analysis and the global component of Climate at a Glance (GCAG).")
@@ -92,7 +92,7 @@ if selection == 'Climate Change Effects':
         st.plotly_chart(fig, use_container_width=True)
 
         st.write("Below we can see the rising sea level over time.")
-        sealevel = pd.read_csv("data/epa-sea-level.csv")
+        sealevel = pd.read_csv('Frontend/data/epa-sea-level.csv')
         year_start_sea, year_end_sea = st.slider('Choose year range:', 1880, 2013, (1880, 2013))
         st.write("Sea level data were sourced from CSIRO Adjusted Sea Level \
                   from the Environmental Protection Agency (EPA), USA.")
@@ -115,16 +115,16 @@ if selection == 'Climate Change Effects':
 
 
 elif selection == 'Climate Change Studies':
-        st.image('images/cl2.jpeg')
+        st.image('Frontend/images/cl2.jpeg')
         st.header('Climate Change Studies')
-        st.write(' Climate Change effects in various sectors and areas studied by ImpactLab are taken for analysis')
+        st.write('Climate Change effects in various sectors and areas studied by ImpactLab are taken for analysis.')
         sector = st.selectbox( 'Climate Change Impact sectors ', sectors)
         session_state.sector = sector
         #st.write('from session:', session_state.sector)
         cltopics = ildf["header"].loc[ildf["category"] == sector]
         sess_topics.topics= cltopics.tolist()
 
-        topic = st.selectbox( 'Climate Change Impact Topic ', sess_topics.topics)
+        topic = st.selectbox('Climate Change Impact Topic', sess_topics.topics)
         ildf_sec = ildf[ildf['category'] ==sector]
         topic_row = ildf_sec.loc[ ildf_sec['header'] == topic]
 
@@ -148,17 +148,17 @@ elif selection == 'Climate Change Studies':
 
 
 elif selection == 'Climate Mitigation Solutions':
-        st.header('CLimate Change Mitigation Solutions')
-        st.image('images/ccmit3.jpeg')
+        st.header('Climate Change Mitigation Solutions')
+        st.image('Frontend/images/ccmit3.jpeg')
         
         st.write('Climate Change mitigation solutions from drawdown portal are analysed here') 
 
-        categ = st.selectbox( 'Climate Mitigition Catgories ', dd_catg)
+        categ = st.selectbox( 'Climate Mitigition Catgories', dd_catg)
         catg_df = dd_df[dd_df['map_topic'] == categ]
 
         node1_counts = catg_df['node1'].value_counts()
-        node1chart  = node1_counts.sort_values()
-        node1chart =node1chart.rename("Area")
+        node1chart = node1_counts.sort_values()
+        node1chart = node1chart.rename("Area")
 
         st.subheader('Contributes to Area')
         alch1 = alt.Chart(catg_df).mark_bar().encode( alt.Y('node1:N'), alt.X('count(node1):Q'))
@@ -176,9 +176,9 @@ elif selection == 'Climate Mitigation Solutions':
 
         #ddtopics = dd_df[dd_df['map_topic'] == categ]['title']
         ddtopics = dd_df["title"].loc[dd_df["map_topic"] == categ]
-        sess_ddtopics.ddtopics=ddtopics.tolist()
+        sess_ddtopics.ddtopics = ddtopics.tolist()
 
-        sol = st.selectbox( 'Climate Solutions ', sess_ddtopics.ddtopics)
+        sol = st.selectbox('Climate Solutions ', sess_ddtopics.ddtopics)
         #st.write('You selected:', sol)      
         sol_row = dd_df.loc[ dd_df['title'] == sol]
         
@@ -202,7 +202,7 @@ elif selection == 'Climate Mitigation Solutions':
 
         if(st_label1[0] != '0'):
             st.write(st_label1[0], st_val1[0], st_unit1[0]) 
-        showtype = st.selectbox( 'Climate Solution Detail ', ['Impact', 'Summary'])
+        showtype = st.selectbox('Climate Solution Detail', ['Impact', 'Summary'])
      
         impact_str = summary_str = ''
         summary = sol_row['summary'].tolist()
@@ -216,7 +216,7 @@ elif selection == 'Climate Mitigation Solutions':
             if( len(summary) > 0):
                 text = summary[0]
                 summary_str = text
-                newsol = "Solution SummaryThis is a new solution;"
+                newsol = "Solution Summary: This is a new solution;"
                 if( newsol in text):
                     text=tech_summary
         if(showtype=='Impact'):
@@ -235,10 +235,12 @@ elif selection == 'Climate Mitigation Solutions':
 
 
 elif selection == 'Further Scope & Credits':
-        st.image('images/ccmit3.jpeg')
+        st.image('Frontend/images/ccmit3.jpeg')
         st.subheader('Intended Audience:')
-        st.write("The mitigation assistant application can be used by industry,policy makers, communities,and general public in adapting to the climate effects relevant to their sector and helps in climate mitigation solution planning implemetation" )
-        st.subheader("This application can be enhanced with ")
+        st.write("The mitigation assistant application can be used by industry,policy makers, communities, \
+                  and general public in adapting to the climate effects relevant to their sector and helps \
+                  in climate mitigation solution planning implemetation" )
+        st.subheader("This application can be enhanced with")
         st.write("* QnA NLP system for user to query any topic/solution.")
         st.write("* Adding more portals for climate study and solutions.")
         st.write("* Support industries/communities in implementation of solutions.")
