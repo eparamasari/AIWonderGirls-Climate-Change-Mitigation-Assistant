@@ -109,7 +109,7 @@ if selection == 'Climate Change Effects':
 
         st.write('Below is a bar chart race showing the top n countries that produce \
                   the most ' + 'CO{}'.format('\u2082') + ' emissions over the years.')
-        st.video('carbon-emissions.mp4')
+        st.video('Frontend/carbon-emissions.mp4')
 
 
 
@@ -151,7 +151,7 @@ elif selection == 'Climate Mitigation Solutions':
         st.header('Climate Change Mitigation Solutions')
         st.image('Frontend/images/ccmit3.jpeg')
         
-        st.write('Climate Change mitigation solutions from drawdown portal are analysed here') 
+        st.write('Climate Change mitigation solutions from drawdown portal are analysed here.') 
 
         categ = st.selectbox( 'Climate Mitigition Catgories', dd_catg)
         catg_df = dd_df[dd_df['map_topic'] == categ]
