@@ -85,7 +85,7 @@ if selection == 'Climate Change Effects':
 
         st.subheader("Rising Global Temperature")
         st.write("Below we can see the rising global temperature anomaly over time.")
-        temperature = pd.read_csv("data/global-temperature-annual.csv")
+        temperature = pd.read_csv("Frontend/data/global-temperature-annual.csv")
         year_start_temp, year_end_temp = st.slider('Choose year range:', 1880, 2016, (1880, 2016))
         st.write("Global temperature anomaly data are sourced from NASA's GISS Surface Temperature \
                   (GISTEMP) analysis and the global component of Climate at a Glance (GCAG).")
@@ -103,7 +103,7 @@ if selection == 'Climate Change Effects':
 
         st.subheader("Rising Sea Level")
         st.write("Below we can see the rising sea level over time.")
-        sealevel = pd.read_csv("data/epa-sea-level.csv")
+        sealevel = pd.read_csv("Frontend/data/epa-sea-level.csv")
         year_start_sea, year_end_sea = st.slider('Choose year range:', 1880, 2013, (1880, 2013))
         st.write("Sea level data were sourced from CSIRO Adjusted Sea Level \
                   from the Environmental Protection Agency (EPA), USA.")
@@ -120,7 +120,7 @@ if selection == 'Climate Change Effects':
 
         st.subheader("Glacier Mass Balance")
         st.write("Below we can see the changes in glaciers mass balance over time.")
-        glacier = pd.read_csv("data/glaciers_mass.csv")
+        glacier = pd.read_csv("Frontend/data/glaciers_mass.csv")
         year_start_glacier, year_end_glacier = st.slider('Choose year range:', 1945, 2014, (1945, 2014))
         st.write("Average cumulative mass balance of “reference” Glaciers worldwide from 1945-2014 \
                   sourced from US EPA and the World Glacier Monitoring Service (WGMS).")
@@ -138,7 +138,7 @@ if selection == 'Climate Change Effects':
         st.subheader("Carbon Emissions by Country")
         st.write('Below is a bar chart race showing the top 10 countries that produce \
                   the highest total ' + 'CO{}'.format('\u2082') + ' emissions over the years.')
-        st.video('carbon-emissions.mp4')
+        st.video('Frontend/carbon-emissions.mp4')
 
 
         # Defining country options
@@ -198,7 +198,7 @@ if selection == 'Climate Change Effects':
 
 
         st.write('Choose a country to see its emissions per capita over the years in kt of  ' + 'CO{}'.format('\u2082') + '.')
-        emissions = pd.read_csv('data/co2_emissions_per_capita_by_country.csv')
+        emissions = pd.read_csv('Frontend/data/co2_emissions_per_capita_by_country.csv')
         default_ix = countries.index("World")
         em_country = st.selectbox("Select country:", options=countries, index=default_ix)
         fig = go.Figure()
