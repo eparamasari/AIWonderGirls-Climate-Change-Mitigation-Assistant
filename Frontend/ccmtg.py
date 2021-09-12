@@ -114,7 +114,7 @@ if selection == 'Climate Change Effects':
         st.subheader("Glacier Mass Balance")
         st.write("Below we can see the changes in glaciers mass balance over time.")
         glacier = pd.read_csv("Frontend/data/glaciers_mass.csv")
-        year_start_glacier, year_end_glacier = st.slider('Choose year range:', 1880, 2013, (1880, 2013))
+        year_start_glacier, year_end_glacier = st.slider('Choose year range:', 1945, 2014, (1945, 2014))
         st.write("Average cumulative mass balance of “reference” Glaciers worldwide from 1945-2014 \
                   sourced from US EPA and the World Glacier Monitoring Service (WGMS).")
 
