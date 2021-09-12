@@ -75,6 +75,8 @@ if selection == 'Climate Change Effects':
                   a number of adverse effects.")
         st.write("This includes rising sea level, melting ice caps, and many more.")
 
+        
+        st.subheader("Global Temperature Rise")
         st.write("Below we can see the rising global temperature anomaly over time.")
         temperature = pd.read_csv("Frontend/data/global-temperature-annual.csv")
         year_start_temp, year_end_temp = st.slider('Choose year range:', 1880, 2016, (1880, 2016))
@@ -91,6 +93,8 @@ if selection == 'Climate Change Effects':
                                  name = 'Global Temperature Change Anomaly'))
         st.plotly_chart(fig, use_container_width=True)
 
+        
+        st.subheader("Sea Level Rise")
         st.write("Below we can see the rising sea level over time.")
         sealevel = pd.read_csv('Frontend/data/epa-sea-level.csv')
         year_start_sea, year_end_sea = st.slider('Choose year range:', 1880, 2013, (1880, 2013))
@@ -107,10 +111,27 @@ if selection == 'Climate Change Effects':
         st.plotly_chart(fig, use_container_width=True)
 
 
+        st.subheader("Glacier Mass Balance")
+        st.write("Below we can see the changes in glaciers mass balance over time.")
+        glacier = pd.read_csv("Frontend/data/glaciers_mass.csv")
+        year_start_glacier, year_end_glacier = st.slider('Choose year range:', 1880, 2013, (1880, 2013))
+        st.write("Average cumulative mass balance of “reference” Glaciers worldwide from 1945-2014 \
+                  sourced from US EPA and the World Glacier Monitoring Service (WGMS).")
+
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x = glacier.loc[(glacier['Year'] >= year_start_glacier) \
+                                 & (glacier['Year'] <= year_end_glacier)]['Year'],
+                                 y = glacier.loc[(glacier['Year'] >= year_start_glacier) \
+                                 & (glacier['Year'] <= year_end_glacier)]['Mean cumulative mass balance'],
+                                 mode = 'lines',
+                                 name = 'Glaciers Mass Balance'))
+        st.plotly_chart(fig, use_container_width=True)
+
+
+        st.subheader("Carbon Emissions by Country")
         st.write('Below is a bar chart race showing the top n countries that produce \
                   the most ' + 'CO{}'.format('\u2082') + ' emissions over the years.')
         st.video('Frontend/carbon-emissions.mp4')
-
 
 
 
@@ -143,7 +164,6 @@ elif selection == 'Climate Change Studies':
                 plt.axis("off")
                 plt.show()
                 st.pyplot(fig)
-
 
 
 
@@ -254,10 +274,4 @@ elif selection == 'Further Scope & Credits':
         st.write("* https://datahub.io/core/global-temp")
         st.write("* https://www.epa.gov/climate-indicators/climate-change-indicators-sea-level")
         st.write("* https://databank.worldbank.org/source/millennium-development-goals# ") 
-
-
-
-
-
-
 
